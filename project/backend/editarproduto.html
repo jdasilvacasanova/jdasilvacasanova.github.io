@@ -117,11 +117,6 @@
 							<div class="form-group">
                                 <label>Página</label>
                                 <select id="Page" class="form-control">
-                                    <option value='Carne'>Carne</option>
-                                    <option value='Peixe'>Peixe</option>
-                                    <option value='Entradas'>Entradas</option>
-                                    <option value='Sobremesas'>Sobremesas</option>
-                                    <option value='Saladas'>Saladas</option>
                                 </select>
                             </div>
 							
@@ -141,18 +136,18 @@
                             </div>
 							
 							<div class="form-group">
-								<img id="Image" src="resources/bitoque.jpg" alt="your image" width="200" height="200" />
+								<img class="img-thumbnail" id="Image" src="resources/bitoque.jpg" width="200" height="200" />
 							</div>
 							
 							<div class="form-group">
                                 <div class="checkbox">
                                     <label>
-                                        <input id="Active" type="checkbox" value="">Activo
+                                        <input id="Active" type="checkbox">Activo
                                     </label>
                                 </div>                   
                             </div>
 							
-                            <button type="reset" class="btn btn-default">Cancelar</button>
+                            <button type="submit" id="cancel" class="btn btn-default">Cancelar</button>
                             <button type="submit" class="btn btn-default">Guardar</button>
 
                         </form>
@@ -185,10 +180,14 @@
                 $('#Image')
                     .attr('src', e.target.result);
             };
-
+			
             reader.readAsDataURL(input.files[0]);
         }
     }
+	
+	for (i = 0; i < Paginas.length; i++) { 
+		$('#Page').append($('<option>',{value:Paginas[i].Nome, text:Paginas[i].Nome}));
+	}
 	
 	var ID = getUrlParameter('id');
 	for (i = 0; i < Produtos.length; i++) { 
@@ -198,9 +197,37 @@
 			$('#Price').val(Produtos[i].Preço);
 			$('#Description').val(Produtos[i].Descrição);
 			$('#Image').attr('src',Produtos[i].Imagem);
-			$('#Active').val(Produtos[i].Activo);
+			$('#Active').attr('checked',Produtos[i].Activo);
 		}
-	}	
+	}
+	$('#cancel').click(function(){
+		// redirect
+		window.location.href = 'produtos.html';
+
+		// prevent default behavior of button
+		return false;
+	});	
+	
+	$( "form" ).submit(function( event ) {
+		for (i = 0; i < Produtos.length; i++) { 
+			if(Produtos[i].ID == ID){
+				Produtos[i].Nome = $('#Name').val();
+				Produtos[i].Página = $('#Page').val();
+				Produtos[i].Preço = $('#Price').val();
+				Produtos[i].Descrição = $('#Description').val();
+				Produtos[i].Imagem = $('#Image').attr('src');
+				Produtos[i].Activo = $('#Active').is(':checked');
+			}
+		}
+		if(ID==null)
+		{
+			Produtos.push({ID:Produtos.length,Nome:$('#Name').val(), Página:$('#Page').val(),Preço:$('#Price').val(),Descrição:$('#Description').val(), Imagem: $('#Image').attr('src'), Activo:$('#Active').is(':checked')
+			})
+		}
+		
+		localStorage.setItem('produtos',JSON.stringify(Produtos));
+	});
+	
 	</script>
 	
 </body>

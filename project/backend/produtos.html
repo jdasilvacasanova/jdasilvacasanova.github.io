@@ -105,7 +105,9 @@
 
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2>Produtos</h2>
+                        <h2>
+						<button id="new" type="button" class="btn btn-lg btn-primary">Criar Produto</button>
+						</h2>
                         <div class="table-responsive">
                             <table id="produtos" class="table table-bordered table-hover">
                                 <thead>
@@ -151,13 +153,27 @@
 				$('<td>').text(item.Página),
 				$('<td>').text(item.Preço+'€'),
 				$('<td>').html('<a href="editarproduto.html?id='+item.ID+'"><i class="fa fa-fw fa-edit"></i></a>'),
-				$('<td>').html('<input type="checkbox" checked="'+item.Activo+'">')
+				$('<td>').html('<input id="'+i+'" type="checkbox">')
 			).appendTo('#produtos');
+			$("#"+i).attr("checked", item.Activo);
 		});
 	});
 	
+	$('#new').click(function(){
+		// redirect
+		window.location.href = 'editarproduto.html';
+
+		// prevent default behavior of button
+		return false;
+	});	
+	
 	$(document).ready(function(){
 		$('#produtos').DataTable();
+		$("input:checkbox").change(function() {
+			Produtos[$(this).attr('id')].Activo = $(this).is(':checked');
+			localStorage.setItem('produtos',JSON.stringify(Produtos));
+		});
+		
 	});
 	</script>
 </body>

@@ -63,7 +63,7 @@
                     <li>
                         <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Inicio</a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="produtos.html"><i class="fa fa-fw fa-table"></i> Produtos</a>
                     </li>
                     <li>
@@ -72,7 +72,7 @@
                     <li>
                         <a href="mesas.html"><i class="fa fa-fw fa-table"></i> Mesas</a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="paginas.html"><i class="fa fa-fw fa-table"></i> Páginas</a>
                     </li>
                 </ul>
@@ -89,17 +89,17 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Editar Produto
+                            Editar Página
                         </h1>
                         <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="index.html">Inicio</a>
                             </li>
                             <li>
-                                <i class="fa fa-table"></i>  <a href="produtos.html">Produtos</a>
+                                <i class="fa fa-table"></i>  <a href="paginas.html">Páginas</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-table"></i> Editar Produto
+                                <i class="fa fa-table"></i> Editar Página
                             </li>
                         </ol>
                     </div>
@@ -107,7 +107,7 @@
                 <!-- /.row -->
 				<div class="col-lg-6">
 
-                        <form role="form">
+                        <form role="form" action="paginas.html">
 
                             <div class="form-group">
                                 <label>Nome</label>
@@ -115,34 +115,15 @@
                             </div>
 							
 							<div class="form-group">
-                                <label>Página</label>
+                                <label>Sub Página de</label>
                                 <select id="Page" class="form-control">
-                                    <option value='Carne'>Carne</option>
-                                    <option value='Peixe'>Peixe</option>
-                                    <option value='Entradas'>Entradas</option>
-                                    <option value='Sobremesas'>Sobremesas</option>
-                                    <option value='Saladas'>Saladas</option>
                                 </select>
                             </div>
 							
 							<div class="form-group">
-                                <label>Preço</label>
-                                <input id="Price" class="form-control">
+                                <label>Ordem</label>
+                                <input id="Order" class="form-control">
                             </div>
-							
-							<div class="form-group">
-                                <label>Descrição</label>
-                                <textarea id="Description" class="form-control" rows="3"></textarea>
-                            </div>
-							
-							<div class="form-group">
-                                <label>Imagem</label>
-								<input type='file' onchange="readURL(this);" accept="image/gif, image/jpeg, image/png"/>
-                            </div>
-							
-							<div class="form-group">
-								<img id="Image" src="resources/bitoque.jpg" alt="your image" width="200" height="200" />
-							</div>
 							
 							<div class="form-group">
                                 <div class="checkbox">
@@ -152,7 +133,7 @@
                                 </div>                   
                             </div>
 							
-                            <button type="reset" class="btn btn-default">Cancelar</button>
+                            <button type="submit" id="cancel" class="btn btn-default">Cancelar</button>
                             <button type="submit" class="btn btn-default">Guardar</button>
 
                         </form>
@@ -177,30 +158,50 @@
 	<script src="js/custom.js"></script>
 	
 	<script>
-	function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#Image')
-                    .attr('src', e.target.result);
-            };
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
 	
 	var ID = getUrlParameter('id');
-	for (i = 0; i < Produtos.length; i++) { 
-		if(Produtos[i].ID == ID){
-			$('#Name').val(Produtos[i].Nome);
-			$('#Page').val(Produtos[i].Página);
-			$('#Price').val(Produtos[i].Preço);
-			$('#Description').val(Produtos[i].Descrição);
-			$('#Image').attr('src',Produtos[i].Imagem);
-			$('#Active').val(Produtos[i].Activo);
+	$('#Page').append($('<option>',{value:"", text:""}));
+	for (i = 0; i < Paginas.length; i++) { 
+		if(Paginas[i].ID == ID){
+			$('#Name').val(Paginas[i].Nome);
+			$('#Page').val(Paginas[i].SubPaginaDe);
+			$('#Order').val(Paginas[i].Ordem);
+			$('#Active').attr('checked',Paginas[i].Activo);
 		}
-	}	
+		else{
+			$('#Page').append($('<option>',{value:Paginas[i].Nome, text:Paginas[i].Nome}));
+		}
+	}
+	$('#cancel').click(function(){
+		// redirect
+		window.location.href = 'paginas.html';
+
+		// prevent default behavior of button
+		return false;
+	});
+	
+	$( "form" ).submit(function( event ) {
+		for (i = 0; i < Paginas.length; i++) { 
+			if(Paginas[i].ID == ID){
+				Paginas[i].Nome = $('#Name').val();
+				Paginas[i].SubPaginaDe = $('#Page').val();
+				Paginas[i].Ordem = $('#Order').val();
+				Paginas[i].Activo = $('#Active').is(':checked');
+			}
+		}
+		if(ID==null)
+		{
+			Paginas.push({
+				ID:Paginas.length,
+				Nome : $('#Name').val(),
+				SubPaginaDe : $('#Page').val(),
+				Ordem : $('#Order').val(),
+				Activo :$('#Active').is(':checked')
+			})
+		}
+		localStorage.setItem('paginas',JSON.stringify(Paginas));
+	});
+	
 	</script>
 	
 </body>

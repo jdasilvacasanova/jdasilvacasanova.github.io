@@ -63,10 +63,10 @@
                     <li>
                         <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Inicio</a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="produtos.html"><i class="fa fa-fw fa-table"></i> Produtos</a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="utilizadores.html"><i class="fa fa-fw fa-table"></i> Utilizadores</a>
                     </li>
                     <li>
@@ -89,17 +89,17 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Editar Produto
+                            Editar Utilizador
                         </h1>
                         <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="index.html">Inicio</a>
                             </li>
                             <li>
-                                <i class="fa fa-table"></i>  <a href="produtos.html">Produtos</a>
+                                <i class="fa fa-table"></i>  <a href="utilizadores.html">Utilizadores</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-table"></i> Editar Produto
+                                <i class="fa fa-table"></i> Editar Utilizador
                             </li>
                         </ol>
                     </div>
@@ -107,7 +107,7 @@
                 <!-- /.row -->
 				<div class="col-lg-6">
 
-                        <form role="form">
+                        <form role="form" action="utilizadores.html">
 
                             <div class="form-group">
                                 <label>Nome</label>
@@ -115,24 +115,23 @@
                             </div>
 							
 							<div class="form-group">
-                                <label>Página</label>
-                                <select id="Page" class="form-control">
-                                    <option value='Carne'>Carne</option>
-                                    <option value='Peixe'>Peixe</option>
-                                    <option value='Entradas'>Entradas</option>
-                                    <option value='Sobremesas'>Sobremesas</option>
-                                    <option value='Saladas'>Saladas</option>
+                                <label>Nivel</label>
+                                <select id="Level" class="form-control">
+                                    <option value='Administrador'>Administrador</option>
+                                    <option value='Gerente'>Gerente</option>
+                                    <option value='Chefe de Cozinha'>Chefe de Cozinha</option>
+                                    <option value='Empregado'>Empregado</option>
                                 </select>
                             </div>
 							
 							<div class="form-group">
-                                <label>Preço</label>
-                                <input id="Price" class="form-control">
+                                <label>Email</label>
+                                <input id="Email" type="email" class="form-control">
                             </div>
 							
 							<div class="form-group">
-                                <label>Descrição</label>
-                                <textarea id="Description" class="form-control" rows="3"></textarea>
+                                <label>Password</label>
+                                <input id="Password" type="password" class="form-control">
                             </div>
 							
 							<div class="form-group">
@@ -141,18 +140,18 @@
                             </div>
 							
 							<div class="form-group">
-								<img id="Image" src="resources/bitoque.jpg" alt="your image" width="200" height="200" />
+								<img class="img-thumbnail" id="Image" src="resources/bitoque.jpg" width="200" height="200" />
 							</div>
 							
 							<div class="form-group">
                                 <div class="checkbox">
                                     <label>
-                                        <input id="Active" type="checkbox" value="">Activo
+                                        <input id="Active" type="checkbox">Activo
                                     </label>
                                 </div>                   
                             </div>
 							
-                            <button type="reset" class="btn btn-default">Cancelar</button>
+                            <button type="submit" id="cancel" class="btn btn-default">Cancelar</button>
                             <button type="submit" class="btn btn-default">Guardar</button>
 
                         </form>
@@ -185,22 +184,56 @@
                 $('#Image')
                     .attr('src', e.target.result);
             };
-
+			
             reader.readAsDataURL(input.files[0]);
         }
     }
 	
 	var ID = getUrlParameter('id');
-	for (i = 0; i < Produtos.length; i++) { 
-		if(Produtos[i].ID == ID){
-			$('#Name').val(Produtos[i].Nome);
-			$('#Page').val(Produtos[i].Página);
-			$('#Price').val(Produtos[i].Preço);
-			$('#Description').val(Produtos[i].Descrição);
-			$('#Image').attr('src',Produtos[i].Imagem);
-			$('#Active').val(Produtos[i].Activo);
+	for (i = 0; i < Utilizadores.length; i++) { 
+		if(Utilizadores[i].ID == ID){
+			$('#Name').val(Utilizadores[i].Nome);
+			$('#Level').val(Utilizadores[i].Nivel);
+			$('#Email').val(Utilizadores[i].Email);
+			$('#Password').val(Utilizadores[i].Password);
+			$('#Image').attr('src',Utilizadores[i].Imagem);
+			$('#Active').attr('checked',Utilizadores[i].Activo);
 		}
-	}	
+	}
+	$('#cancel').click(function(){
+		// redirect
+		window.location.href = 'utilizadores.html';
+
+		// prevent default behavior of button
+		return false;
+	});	
+	
+	$( "form" ).submit(function( event ) {
+		for (i = 0; i < Utilizadores.length; i++) { 
+			if(Utilizadores[i].ID == ID){
+				Utilizadores[i].Nome = $('#Name').val();
+				Utilizadores[i].Nivel = $('#Level').val();
+				Utilizadores[i].Email = $('#Email').val();
+				Utilizadores[i].Password = $('#Password').val();
+				Utilizadores[i].Imagem = $('#Image').attr('src');
+				Utilizadores[i].Activo = $('#Active').is(':checked');
+			}
+		}
+		if(ID==null)
+		{
+			Utilizadores.push({
+				ID:Utilizadores.length,
+				Nome : $('#Name').val(),
+				Nivel : $('#Level').val(),
+				Email : $('#Email').val(),
+				Password : $('#Password').val(),
+				Imagem : $('#Image').attr('src'),
+				Activo : $('#Active').is(':checked')
+			})
+		}
+		localStorage.setItem('utilizadores',JSON.stringify(Utilizadores));
+	});
+	
 	</script>
 	
 </body>

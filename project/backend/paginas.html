@@ -105,7 +105,10 @@
 
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2>Páginas</h2>
+                        <h2>
+						<button id="new" type="button" class="btn btn-lg btn-primary">Criar Página</button>
+						</h2>
+						
                         <div class="table-responsive">
                             <table id="paginas" class="table table-bordered table-hover">
                                 <thead>
@@ -151,13 +154,27 @@
 				$('<td>').text(item.SubPaginaDe),
 				$('<td>').text(item.Ordem),
 				$('<td>').html('<a href="editarpagina.html?id='+item.ID+'"><i class="fa fa-fw fa-edit"></i></a>'),
-				$('<td>').html('<input type="checkbox" checked="'+item.Activo+'">')
+				$('<td>').html('<input id="'+i+'" type="checkbox">')
 			).appendTo('#paginas');
+			$("#"+i).attr("checked", item.Activo);
 		});
 	});
 	
+		
+	$('#new').click(function(){
+		// redirect
+		window.location.href = 'editarpagina.html';
+
+		// prevent default behavior of button
+		return false;
+	});	
+	
 	$(document).ready(function(){
 		$('#paginas').DataTable();
+		$("input:checkbox").change(function() {
+			Paginas[$(this).attr('id')].Activo = $(this).is(':checked');
+			localStorage.setItem('paginas',JSON.stringify(Paginas));
+		}); 
 	});
 	</script>
 </body>

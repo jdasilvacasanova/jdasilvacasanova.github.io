@@ -103,7 +103,9 @@
 
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2>Mesas</h2>
+                        <h2>
+						<button id="new" type="button" class="btn btn-lg btn-primary">Criar Mesa</button>
+						</h2>
                         <div class="table-responsive">
                             <table id="mesas" class="table table-bordered table-hover">
                                 <thead>
@@ -151,13 +153,27 @@
 				$('<td>').text(item.Tipo),
 				$('<td>').text(item.Capacidade),
 				$('<td>').html('<a href="editarmesa.html?id='+item.ID+'"><i class="fa fa-fw fa-edit"></i></a>'),
-				$('<td>').html('<input type="checkbox" checked="'+item.Activo+'">')
+				$('<td>').html('<input id="'+i+'" type="checkbox">')
 			).appendTo('#mesas');
+			$("#"+i).attr("checked", item.Activo);
 		});
 	});
 	
+		
+	$('#new').click(function(){
+		// redirect
+		window.location.href = 'editarmesa.html';
+
+		// prevent default behavior of button
+		return false;
+	});	
+	
 	$(document).ready(function(){
 		$('#mesas').DataTable();
+		$("input:checkbox").change(function() {
+			Mesas[$(this).attr('id')].Activo = $(this).is(':checked');
+			localStorage.setItem('mesas',JSON.stringify(Mesas));
+		}); 
 	});
 	</script>
 	

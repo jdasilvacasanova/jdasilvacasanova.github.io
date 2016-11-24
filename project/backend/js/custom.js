@@ -41,7 +41,7 @@ else{
 
 var Utilizadores = [
 {ID:"1",Nome:"John Smith", Nivel:"Administrador",Email:"JohnSmith@restaurant.com",Password:"Password", Imagem: "resources/JohnSmith.jpg",Activo:"true"},
-{ID:"2",Nome:"John Cook", Nivel:"Cozinheiro",Email:"JohnCook@restaurant.com",Password:"Password", Imagem: "resources/JohnCook.jpg",Activo:"true"}];
+{ID:"2",Nome:"John Cook", Nivel:"Empregado",Email:"JohnCook@restaurant.com",Password:"Password", Imagem: "resources/JohnCook.jpg",Activo:"true"}];
 
 if(localStorage.getItem('utilizadores')==null){
 	localStorage.setItem('utilizadores',JSON.stringify(Utilizadores));
