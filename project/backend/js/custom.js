@@ -30,7 +30,9 @@ var getUrlParameter = function getUrlParameter(sParam) {
 var Produtos = [
 {ID:"1",Nome:"Bitoque", Página:"Carne",Preço:"11",Descrição:"Batatas Fritas, arroz, bife de vaca, salada, ovo estrelado", Imagem: "resources/bitoque.jpg", Activo:true},
 {ID:"2",Nome:"Mousse de chocolate", Página:"Sobremesas",Preço:"2",Descrição:"Mousse de chocolate", Imagem: "resources/mousse.jpg", Activo:false},
-{ID:"3",Nome:"Bacalhau á Brás", Página:"Peixe",Preço:"13",Descrição:"Bacalhau, etc...", Imagem: "resources/bacalhau.jpg", Activo:true}];
+{ID:"3",Nome:"Bacalhau á Brás", Página:"Peixe",Preço:"13",Descrição:"Bacalhau, etc...", Imagem: "resources/bacalhau.jpg", Activo:true},
+{ID:"4",Nome:"Copo de Vinho", Página:"Bebidas",Preço:"2",Descrição:"Vinho da Casa", Imagem: "resources/vinho.jpg", Activo:true},
+{ID:"5",Nome:"Água 0.5ml", Página:"Bebidas",Preço:"1.5",Descrição:"Água Mineral Natural", Imagem: "resources/agua.jpg", Activo:true}];
 
 if(localStorage.getItem('produtos')==null){
 	localStorage.setItem('produtos',JSON.stringify(Produtos));
@@ -41,7 +43,7 @@ else{
 
 var Utilizadores = [
 {ID:"1",Nome:"John Smith", Nivel:"Administrador",Email:"JohnSmith@restaurant.com",Password:"Password", Imagem: "resources/JohnSmith.jpg",Activo:true},
-{ID:"2",Nome:"John Cook", Nivel:"Empregado",Email:"JohnCook@restaurant.com",Password:"Password", Imagem: "resources/JohnCook.jpg",Activo:true}];
+{ID:"2",Nome:"John Cook", Nivel:"Cozinheiro",Email:"JohnCook@restaurant.com",Password:"Password", Imagem: "resources/JohnCook.jpg",Activo:true}];
 
 if(localStorage.getItem('utilizadores')==null){
 	localStorage.setItem('utilizadores',JSON.stringify(Utilizadores));
@@ -64,10 +66,11 @@ else{
 
 var Paginas = [
 {ID:"1",Nome:"Inicio", SubPaginaDe:"",Ordem:"1",Imagem:"resources/Inicio.jpg",Activo:true},
-{ID:"2",Nome:"Carne", SubPaginaDe:"Inicio",Ordem:"1",Imagem:"resources/Carnes.jpg",Activo:true},
-{ID:"3",Nome:"Peixe", SubPaginaDe:"Inicio",Ordem:"2",Imagem:"resources/Peixe.jpg",Activo:true},
-{ID:"4",Nome:"Sobremesas", SubPaginaDe:"Inicio",Ordem:"3",Imagem:"resources/Sobremesas.jpg",Activo:true},
-{ID:"5",Nome:"Entradas", SubPaginaDe:"Inicio",Ordem:"4",Imagem:"resources/Entradas.jpg",Activo:true},
+{ID:"2",Nome:"Carne", SubPaginaDe:"",Ordem:"1",Imagem:"resources/Carnes.jpg",Activo:true},
+{ID:"3",Nome:"Peixe", SubPaginaDe:"",Ordem:"2",Imagem:"resources/Peixe.jpg",Activo:true},
+{ID:"4",Nome:"Sobremesas", SubPaginaDe:"",Ordem:"3",Imagem:"resources/Sobremesas.jpg",Activo:true},
+{ID:"5",Nome:"Entradas", SubPaginaDe:"",Ordem:"4",Imagem:"resources/Entradas.jpg",Activo:true},
+{ID:"6",Nome:"Bebidas", SubPaginaDe:"",Ordem:"5",Imagem:"resources/Bebidas.jpg",Activo:true}
 ];
 
 if(localStorage.getItem('paginas')==null){
@@ -75,4 +78,22 @@ if(localStorage.getItem('paginas')==null){
 }
 else{
 	Paginas = JSON.parse(localStorage.getItem('paginas'));
+}
+
+Pedido = []
+
+if(localStorage.getItem('pedido')==null){
+	localStorage.setItem('pedido',JSON.stringify(Pedido));
+}
+else{
+	Pedido = JSON.parse(localStorage.getItem('pedido'));
+}
+
+Fatura = []
+
+if(localStorage.getItem('fatura')==null){
+	localStorage.setItem('fatura',JSON.stringify(Fatura));
+}
+else{
+	Fatura = JSON.parse(localStorage.getItem('fatura'));
 }

@@ -30,7 +30,9 @@ var getUrlParameter = function getUrlParameter(sParam) {
 var Produtos = [
 {ID:"1",Nome:"Bitoque", Página:"Carne",Preço:"11",Descrição:"Batatas Fritas, arroz, bife de vaca, salada, ovo estrelado", Imagem: "resources/bitoque.jpg", Activo:true},
 {ID:"2",Nome:"Mousse de chocolate", Página:"Sobremesas",Preço:"2",Descrição:"Mousse de chocolate", Imagem: "resources/mousse.jpg", Activo:false},
-{ID:"3",Nome:"Bacalhau á Brás", Página:"Peixe",Preço:"13",Descrição:"Bacalhau, etc...", Imagem: "resources/bacalhau.jpg", Activo:true}];
+{ID:"3",Nome:"Bacalhau á Brás", Página:"Peixe",Preço:"13",Descrição:"Bacalhau, etc...", Imagem: "resources/bacalhau.jpg", Activo:true},
+{ID:"4",Nome:"Copo de Vinho", Página:"Bebidas",Preço:"2",Descrição:"Vinho da Casa", Imagem: "resources/vinho.jpg", Activo:true},
+{ID:"5",Nome:"Água 0.5ml", Página:"Bebidas",Preço:"1.5",Descrição:"Água Mineral Natural", Imagem: "resources/agua.jpg", Activo:true}];
 
 if(localStorage.getItem('produtos')==null){
 	localStorage.setItem('produtos',JSON.stringify(Produtos));
@@ -68,6 +70,7 @@ var Paginas = [
 {ID:"3",Nome:"Peixe", SubPaginaDe:"",Ordem:"2",Imagem:"resources/Peixe.jpg",Activo:true},
 {ID:"4",Nome:"Sobremesas", SubPaginaDe:"",Ordem:"3",Imagem:"resources/Sobremesas.jpg",Activo:true},
 {ID:"5",Nome:"Entradas", SubPaginaDe:"",Ordem:"4",Imagem:"resources/Entradas.jpg",Activo:true},
+{ID:"6",Nome:"Bebidas", SubPaginaDe:"",Ordem:"5",Imagem:"resources/Bebidas.jpg",Activo:true}
 ];
 
 if(localStorage.getItem('paginas')==null){
