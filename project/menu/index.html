@@ -21,6 +21,12 @@
 	
 	<!-- Custom Script -->
 	<script src="js/custom.js"></script>
+	
+	<!-- jQuery -->
+	<script src="js/jquery.js"></script>
+	<!-- Bootstrap Core JavaScript -->
+	<script src="js/bootstrap.min.js"></script>
+	
 </head>
 <body onload="startTime()">
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="height:5vh">
@@ -69,7 +75,7 @@
                 <div>
 					<div class="panel-body">
 						<h2>Pedido</h2>
-						<table class="table">
+						<table id="pedido" class="table">
 							<thead>
 								<tr>
 									<th class="text-left">Quantity</th>
@@ -79,18 +85,13 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td class="text-left">1</td>
-									<td class="text-left">Coca Cola</td>
-									<td class="text-right"><button type="button" class="btn btn-xs btn-danger">X</button></td>
-									<td class="text-right">2€</td>
-								</tr>
 							</tbody>
 						</table>
+						<h3 id="totalpedido" class="text-right"></h3>
 					</div>
 					<div class="panel-body AnchorToBottom col-xs-12">
-						<h2>Factura</h2>
-						<table class="table">
+						<h2>Fatura</h2>
+						<table id="fatura" class="table">
 							<thead>
 								<tr>
 									<th class="text-left">Quantity</th>
@@ -100,27 +101,83 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td class="text-left">1</td>
-									<td class="text-left">Coca Cola</td>
-									<td class="text-right"></td>
-									<td class="text-right">2€</td>
-								</tr>
 							</tbody>
 						</table>
+						<h3 id="totalfatura" class="text-right"></h3>
 						<div>
-							<button type="button" class="btn btn-lg btn-primary">Fazer Pedido</button>
-							<button type="button" class="btn btn-lg btn-primary">Pedir Factura</button>
+							<button id="fazerpedido" type="button" class="btn btn-lg btn-primary">Fazer Pedido</button>
+							<button id="pedirfatura" type="button" class="btn btn-lg btn-primary">Pedir Factura</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	
-	<!-- jQuery -->
-	<script src="js/jquery.js"></script>
-	<!-- Bootstrap Core JavaScript -->
-	<script src="js/bootstrap.min.js"></script>
+	<script>
+		var totalPedido = 0;
+		var totalFatura = 0;
+		
+		function buildPedido() {
+			totalPedido = 0;
+			$("#pedido > tbody").html("");
+			$.each(Pedido, function(i, item) {
+				var $tr = $('<tr>').append(
+					$('<td class="text-left">').text(item.Quantidade),
+					$('<td class="text-left">').text(item.Nome),
+					$('<td class="text-right">').html('<button value="'+i+'" type="button" class="btn btn-xs btn-danger remove">X</button>'),
+					$('<td class="text-right">').text(item.Preço+"€")
+				).appendTo('#pedido');
+				totalPedido += (Number(item.Preço)*Number(item.Quantidade));
+			});
+			$('#totalpedido').text("Total: "+totalPedido+"€")
+		}
+		
+		buildPedido();
+		
+		function buildFatura() {
+			totalFatura = 0;
+			$("#fatura > tbody").html("");
+			$.each(Fatura, function(i, item) {
+				var $tr = $('<tr>').append(
+					$('<td class="text-left">').text(item.Quantidade),
+					$('<td class="text-left">').text(item.Nome),
+					$('<td class="text-right">').html(''),
+					$('<td class="text-right">').text(item.Preço+"€")
+				).appendTo('#fatura');
+				totalFatura += (Number(item.Preço)*Number(item.Quantidade));
+			});
+			$('#totalfatura').text("Total: "+totalFatura+"€")
+		}
+		
+		buildFatura();
+	
+		
+		$(document).ready(function(){
+			$("#pedido").on('click','.remove',function(){
+				Pedido.splice($(this).val(),1);
+				localStorage.setItem('pedido',JSON.stringify(Pedido));
+				buildPedido();
+			});
+			$("#fazerpedido").click(function(){
+				if (confirm('Após fazer o pedido não o poderá editar. Fazer pedido?')) {
+					Fatura = Fatura.concat(Pedido);
+					Pedido= [];
+					localStorage.setItem('pedido',JSON.stringify(Pedido));
+					localStorage.setItem('fatura',JSON.stringify(Fatura));
+					buildPedido();
+					buildFatura();
+				}
+			});
+			$("#pedirfatura").click(function(){
+				if (confirm('Deseja pedir a sua fatura?')) {
+					Fatura = [];
+					localStorage.setItem('fatura',JSON.stringify(Fatura));
+					buildFatura();
+				}
+			});
+		});
+		
+        </script>
 	
 	<script>
 	

@@ -126,6 +126,15 @@
                             </div>
 							
 							<div class="form-group">
+                                <label>Imagem</label>
+								<input type='file' onchange="readURL(this);" accept="image/gif, image/jpeg, image/png"/>
+                            </div>
+							
+							<div class="form-group">
+								<img class="img-thumbnail" id="Image" src="resources/bitoque.jpg" width="200" height="200" />
+							</div>
+							
+							<div class="form-group">
                                 <div class="checkbox">
                                     <label>
                                         <input id="Active" type="checkbox" value="">Activo
@@ -159,6 +168,19 @@
 	
 	<script>
 	
+	function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#Image')
+                    .attr('src', e.target.result);
+            };
+			
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+	
 	var ID = getUrlParameter('id');
 	$('#Page').append($('<option>',{value:"", text:""}));
 	for (i = 0; i < Paginas.length; i++) { 
@@ -166,6 +188,7 @@
 			$('#Name').val(Paginas[i].Nome);
 			$('#Page').val(Paginas[i].SubPaginaDe);
 			$('#Order').val(Paginas[i].Ordem);
+			$('#Image').attr('src',Paginas[i].Imagem);
 			$('#Active').attr('checked',Paginas[i].Activo);
 		}
 		else{
@@ -186,16 +209,18 @@
 				Paginas[i].Nome = $('#Name').val();
 				Paginas[i].SubPaginaDe = $('#Page').val();
 				Paginas[i].Ordem = $('#Order').val();
+				Paginas[i].Imagem = $('#Image').attr('src');
 				Paginas[i].Activo = $('#Active').is(':checked');
 			}
 		}
 		if(ID==null)
 		{
 			Paginas.push({
-				ID:Paginas.length,
+				ID:Paginas.length+1,
 				Nome : $('#Name').val(),
 				SubPaginaDe : $('#Page').val(),
 				Ordem : $('#Order').val(),
+				Imagem: $('#Image').attr('src'), 
 				Activo :$('#Active').is(':checked')
 			})
 		}

@@ -39,15 +39,13 @@
 <body onload="startTime()">
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="height:5vh">
 				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header">
+				<div id="NavBar" class="navbar-header">
 					<a class="navbar-brand" href="index.html">Atrás</a>
+					<div class="navbar-brand">|</div>
 					<a class="navbar-brand" href="index.html">Inicio</a>
 					<div class="navbar-brand">></div>
 					<a class="navbar-brand" href="cardapio.html">Cardapio</a>
 					<div class="navbar-brand">></div>
-					<a class="navbar-brand" href="pagina.html?id=1">Carnes</a>
-					<div class="navbar-brand">></div>
-					<a class="navbar-brand" href="produto.html?id=1">Bitoque</a>
 				</div>
 				<!-- Top Menu Items -->
 				<ul class="nav navbar-right top-nav">
@@ -55,29 +53,7 @@
 				</ul>
 	</nav>
 		<div class="col-xs-8 text-center">
-            <div class="panel panel-default ParentPage" style="height:90vh" id="">
-                <h1>Bitoque</h1>
-				<div class="col-xs-6 text-center">
-					<div class="panel-body">
-						<img style="user-select: none; cursor: zoom-in;" src="https://cdn3.iconfinder.com/data/icons/food-drink/512/Waiter-512.png" width="300" height="300">
-					</div>
-				</div>
-				<div class="col-xs-6 text-left">
-					<div class="panel-body">
-						<h2>Description of the plate etc etc etc etc etc etc etc etc</h2>
-					</div>
-				</div>
-				<div class="col-xs-12 text-left">
-					<h2>Preço: 12€</h2>
-				</div>
-				<div class="col-xs-12 text-right AnchorToBottom panel-body">
-					<div class="col-xs-2 col-xs-offset-8">
-						<input id="demo1" type="text" value="1" name="demo1"></input>
-					</div>
-					<div class="col-xs-2">
-						<button type="button" class="btn btn-lg btn-primary">Adicionar</button>
-					</div>
-				</div>
+            <div id="product" class="panel panel-default ParentPage" style="height:90vh" id="">
 			</div>
         </div>
 		<div class="col-xs-4 text-center">
@@ -85,7 +61,7 @@
                 <div>
 					<div class="panel-body">
 						<h2>Pedido</h2>
-						<table class="table">
+						<table id="pedido" class="table">
 							<thead>
 								<tr>
 									<th class="text-left">Quantity</th>
@@ -95,18 +71,13 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td class="text-left">1</td>
-									<td class="text-left">Coca Cola</td>
-									<td class="text-right"><button type="button" class="btn btn-xs btn-danger">X</button></td>
-									<td class="text-right">2€</td>
-								</tr>
 							</tbody>
 						</table>
+						<h3 id="totalpedido" class="text-right"></h3>
 					</div>
 					<div class="panel-body AnchorToBottom col-xs-12">
-						<h2>Factura</h2>
-						<table class="table">
+						<h2>Fatura</h2>
+						<table id="fatura" class="table">
 							<thead>
 								<tr>
 									<th class="text-left">Quantity</th>
@@ -116,17 +87,12 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td class="text-left">1</td>
-									<td class="text-left">Coca Cola</td>
-									<td class="text-right"></td>
-									<td class="text-right">2€</td>
-								</tr>
 							</tbody>
 						</table>
+						<h3 id="totalfatura" class="text-right"></h3>
 						<div>
-							<button type="button" class="btn btn-lg btn-primary">Fazer Pedido</button>
-							<button type="button" class="btn btn-lg btn-primary">Pedir Factura</button>
+							<button id="fazerpedido" type="button" class="btn btn-lg btn-primary">Fazer Pedido</button>
+							<button id="pedirfatura" type="button" class="btn btn-lg btn-primary">Pedir Factura</button>
 						</div>
 					</div>
 				</div>
@@ -134,14 +100,109 @@
 		</div>
 	
 	<script>
-            $("input[name='demo1']").TouchSpin({
-                min: 0,
+		var totalPedido = 0;
+		var totalFatura = 0;
+		
+		function buildPedido() {
+			totalPedido = 0;
+			$("#pedido > tbody").html("");
+			$.each(Pedido, function(i, item) {
+				var $tr = $('<tr>').append(
+					$('<td class="text-left">').text(item.Quantidade),
+					$('<td class="text-left">').text(item.Nome),
+					$('<td class="text-right">').html('<button value="'+i+'" type="button" class="btn btn-xs btn-danger remove">X</button>'),
+					$('<td class="text-right">').text(item.Preço+"€")
+				).appendTo('#pedido');
+				totalPedido += (Number(item.Preço)*Number(item.Quantidade));
+			});
+			$('#totalpedido').text("Total: "+totalPedido+"€")
+		}
+		
+		buildPedido();
+		
+		function buildFatura() {
+			totalFatura = 0;
+			$("#fatura > tbody").html("");
+			$.each(Fatura, function(i, item) {
+				var $tr = $('<tr>').append(
+					$('<td class="text-left">').text(item.Quantidade),
+					$('<td class="text-left">').text(item.Nome),
+					$('<td class="text-right">').html(''),
+					$('<td class="text-right">').text(item.Preço+"€")
+				).appendTo('#fatura');
+				totalFatura += (Number(item.Preço)*Number(item.Quantidade));
+			});
+			$('#totalfatura').text("Total: "+totalFatura+"€")
+		}
+		
+		buildFatura();
+	
+		var ID = getUrlParameter('id');
+		
+		var currentProduct = $.grep(Produtos, function(e){ return e.ID == ID;})[0];
+		var parentPage = $.grep(Paginas, function(e){ return e.Nome == currentProduct.Página; })[0];
+		
+		function buildProduct(){
+			if(currentProduct.Página!=""&&currentProduct.Página!="Inicio"){
+				$("#NavBar").append('<a class="navbar-brand" href="pagina.html?id='+parentPage.ID+'">'+parentPage.Nome+'</a><div class="navbar-brand">></div>');
+			}
+			$("#NavBar").append('<a class="navbar-brand" href="produto.html?id='+currentProduct.ID+'">'+currentProduct.Nome+'</a>');
+			$("#product").html("<h1>"+currentProduct.Nome+"</h1>");
+			$("#product").append('<div class="col-xs-6 text-center"><div class="panel-body"><img  src="'+currentProduct.Imagem+'" width="300" height="300"></div></div>');
+			$("#product").append('<div class="col-xs-6 text-left"><div class="panel-body"><h2>'+currentProduct.Descrição+'</h2></div></div>');
+			$("#product").append('<div class="col-xs-12 text-left"><h2>Preço: '+currentProduct.Preço+'€</h2></div>');
+			$("#product").append('<div class="col-xs-12 text-right AnchorToBottom panel-body"><div class="col-xs-2 col-xs-offset-8"><input id="demo1" type="text" value="1" name="demo1"></input></div><div class="col-xs-2"><button type="button" id="adicionar" class="btn btn-lg btn-primary">Adicionar</button></div></div>');
+		}
+		
+		buildProduct();
+		
+		$(document).ready(function(){
+			$("#pedido").on('click','.remove',function(){
+				Pedido.splice($(this).val(),1);
+				localStorage.setItem('pedido',JSON.stringify(Pedido));
+				buildPedido();
+			});
+			$("#fazerpedido").click(function(){
+				if (confirm('Após fazer o pedido não o poderá editar. Fazer pedido?')) {
+					Fatura = Fatura.concat(Pedido);
+					Pedido= [];
+					localStorage.setItem('pedido',JSON.stringify(Pedido));
+					localStorage.setItem('fatura',JSON.stringify(Fatura));
+					buildPedido();
+					buildFatura();
+				}
+			});
+			$("#pedirfatura").click(function(){
+				if (confirm('Deseja pedir a sua fatura?')) {
+					Fatura = [];
+					localStorage.setItem('fatura',JSON.stringify(Fatura));
+					buildFatura();
+				}
+			});
+			$("#adicionar").click(function(){
+				var found = false;
+				$.each(Pedido, function(i, item) {
+					if(item.Nome==currentProduct.Nome){
+						found = true;
+						item.Quantidade += Number($("#demo1").val());
+					}
+				});
+				if(!found){
+					Pedido = Pedido.concat({ID:Pedido.lenght+1,Quantidade:Number($("#demo1").val()),Nome:currentProduct.Nome,Preço:currentProduct.Preço});
+				}
+				localStorage.setItem('pedido',JSON.stringify(Pedido));
+				buildPedido();
+			});
+		});
+		
+        $("input[name='demo1']").TouchSpin({
+                min: 1,
                 max: 20,
                 step: 1,
                 decimals: 0,
                 boostat: 1,
                 maxboostedstep: 1
-            });
+        });
         </script>
 	
 	

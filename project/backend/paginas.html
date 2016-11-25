@@ -149,14 +149,16 @@
 	<script>
 	$(function() {
 		$.each(Paginas, function(i, item) {
-			var $tr = $('<tr>').append(
-				$('<td>').text(item.Nome),
-				$('<td>').text(item.SubPaginaDe),
-				$('<td>').text(item.Ordem),
-				$('<td>').html('<a href="editarpagina.html?id='+item.ID+'"><i class="fa fa-fw fa-edit"></i></a>'),
-				$('<td>').html('<input id="'+i+'" type="checkbox">')
-			).appendTo('#paginas');
-			$("#"+i).attr("checked", item.Activo);
+			if(item.Nome!="Inicio"){
+				var $tr = $('<tr>').append(
+					$('<td>').text(item.Nome),
+					$('<td>').text(item.SubPaginaDe),
+					$('<td>').text(item.Ordem),
+					$('<td>').html('<a href="editarpagina.html?id='+item.ID+'"><i class="fa fa-fw fa-edit"></i></a>'),
+					$('<td>').html('<input id="'+i+'" type="checkbox">')
+				).appendTo('#paginas');
+				$("#"+i).attr("checked", item.Activo);
+			}
 		});
 	});
 	
