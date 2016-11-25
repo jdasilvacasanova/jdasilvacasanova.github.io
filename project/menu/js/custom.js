@@ -77,8 +77,7 @@ else{
 	Paginas = JSON.parse(localStorage.getItem('paginas'));
 }
 
-Pedido = [
-{ID:"1",Quantidade:"1",Nome:"Coca Cola",Preço:"2"}]
+Pedido = []
 
 if(localStorage.getItem('pedido')==null){
 	localStorage.setItem('pedido',JSON.stringify(Pedido));
@@ -87,8 +86,7 @@ else{
 	Pedido = JSON.parse(localStorage.getItem('pedido'));
 }
 
-Fatura = [
-{ID:"1",Quantidade:"1",Nome:"Bitoque",Preço:"2"}]
+Fatura = []
 
 if(localStorage.getItem('fatura')==null){
 	localStorage.setItem('fatura',JSON.stringify(Fatura));
