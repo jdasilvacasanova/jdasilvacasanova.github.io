@@ -30,7 +30,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
 var Produtos = [
 {ID:"1",Nome:"Bitoque", Página:"Carne",Preço:"11",Descrição:"Batatas Fritas, arroz, bife de vaca, salada, ovo estrelado", Imagem: "resources/bitoque.jpg", Activo:true},
 {ID:"2",Nome:"Mousse de chocolate", Página:"Sobremesas",Preço:"2",Descrição:"Mousse de chocolate", Imagem: "resources/mousse.jpg", Activo:false},
-{ID:"3",Nome:"Bacalhau á Braz", Página:"Peixe",Preço:"13",Descrição:"Bacalhau, etc...", Imagem: "resources/bacalhau.jpg", Activo:true}];
+{ID:"3",Nome:"Bacalhau á Brás", Página:"Peixe",Preço:"13",Descrição:"Bacalhau, etc...", Imagem: "resources/bacalhau.jpg", Activo:true}];
 
 if(localStorage.getItem('produtos')==null){
 	localStorage.setItem('produtos',JSON.stringify(Produtos));

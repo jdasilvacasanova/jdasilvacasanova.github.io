@@ -36,7 +36,7 @@
 					<div class="navbar-brand">|</div>
 					<a class="navbar-brand" href="index.html">Inicio</a>
 					<div class="navbar-brand">></div>
-					<a class="navbar-brand" href="cardapio.html">Cardapio</a>
+					<a class="navbar-brand" href="cardapio.html">Cardápio</a>
 				</div>
 				<!-- Top Menu Items -->
 				<ul class="nav navbar-right top-nav">
@@ -55,10 +55,10 @@
 						<table id="pedido" class="table">
 							<thead>
 								<tr>
-									<th class="text-left">Quantity</th>
-									<th>Product</th>
+									<th class="text-left">Quantidade</th>
+									<th>Produto</th>
 									<th class="text-left"></th>
-									<th class="text-right">Price</th>
+									<th class="text-right">Preço</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -71,10 +71,10 @@
 						<table id="fatura" class="table">
 							<thead>
 								<tr>
-									<th class="text-left">Quantity</th>
-									<th>Product</th>
+									<th class="text-left">Quantidade</th>
+									<th>Produto</th>
 									<th class="text-left"></th>
-									<th class="text-right">Price</th>
+									<th class="text-right">Preço</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -129,7 +129,7 @@
 		buildFatura();
 		
 		function buildPages(){
-			$("#pages").html("<h1>Cardapio</h1>");
+			$("#pages").html("<h1>Cardápio</h1>");
 			$.each(Paginas, function(i, item) {
 				if(item.Nome!="Inicio"&&(item.SubPaginaDe==""||item.SubPaginaDe=="Inicio")&&item.Activo){
 					var $tr = 

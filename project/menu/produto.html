@@ -40,7 +40,7 @@
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="height:5vh">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div id="NavBar" class="navbar-header">
-					<a class="navbar-brand" href="index.html">Atrás</a>
+					<a id="Atras" class="navbar-brand" href="cardapio.html">Atrás</a>
 					<div class="navbar-brand">|</div>
 					<a class="navbar-brand" href="index.html">Inicio</a>
 					<div class="navbar-brand">></div>
@@ -64,10 +64,10 @@
 						<table id="pedido" class="table">
 							<thead>
 								<tr>
-									<th class="text-left">Quantity</th>
-									<th>Product</th>
+									<th class="text-left">Quantidade</th>
+									<th>Produto</th>
 									<th class="text-left"></th>
-									<th class="text-right">Price</th>
+									<th class="text-right">Preço</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -80,10 +80,10 @@
 						<table id="fatura" class="table">
 							<thead>
 								<tr>
-									<th class="text-left">Quantity</th>
-									<th>Product</th>
+									<th class="text-left">Quantidade</th>
+									<th>Produto</th>
 									<th class="text-left"></th>
-									<th class="text-right">Price</th>
+									<th class="text-right">Preço</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -145,12 +145,13 @@
 		function buildProduct(){
 			if(currentProduct.Página!=""&&currentProduct.Página!="Inicio"){
 				$("#NavBar").append('<a class="navbar-brand" href="pagina.html?id='+parentPage.ID+'">'+parentPage.Nome+'</a><div class="navbar-brand">></div>');
+				$("#Atras").attr("href","pagina.html?id="+parentPage.ID);
 			}
 			$("#NavBar").append('<a class="navbar-brand" href="produto.html?id='+currentProduct.ID+'">'+currentProduct.Nome+'</a>');
 			$("#product").html("<h1>"+currentProduct.Nome+"</h1>");
 			$("#product").append('<div class="col-xs-6 text-center"><div class="panel-body"><img  src="'+currentProduct.Imagem+'" width="300" height="300"></div></div>');
 			$("#product").append('<div class="col-xs-6 text-left"><div class="panel-body"><h2>'+currentProduct.Descrição+'</h2></div></div>');
-			$("#product").append('<div class="col-xs-12 text-left"><h2>Preço: '+currentProduct.Preço+'€</h2></div>');
+			$("#product").append('<div class="col-xs-6 text-left"><div class="panel-body"><h2>Preço: '+currentProduct.Preço+'€</h2></div></div>');
 			$("#product").append('<div class="col-xs-12 text-right AnchorToBottom panel-body"><div class="col-xs-2 col-xs-offset-8"><input id="demo1" type="text" value="1" name="demo1"></input></div><div class="col-xs-2"><button type="button" id="adicionar" class="btn btn-lg btn-primary">Adicionar</button></div></div>');
 		}
 		
