@@ -107,6 +107,12 @@
 				).appendTo('#pedido');
 				totalPedido += (Number(item.Preço)*Number(item.Quantidade));
 			});
+			if(Pedido.length==0){
+				$('#fazerpedido').prop('disabled', true);
+			}
+			else{
+				$('#fazerpedido').prop('disabled', false);
+			}
 			$('#totalpedido').text("Total: "+totalPedido+"€")
 		}
 		
@@ -125,6 +131,14 @@
 				totalFatura += (Number(item.Preço)*Number(item.Quantidade));
 			});
 			$('#totalfatura').text("Total: "+totalFatura+"€")
+			
+			if(Fatura.length==0){
+				$('#pedirfatura').prop('disabled', true);
+			}
+			else{
+				$('#pedirfatura').prop('disabled', false);
+			}
+			
 		}
 		
 		buildFatura();
