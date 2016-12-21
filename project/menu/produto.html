@@ -166,7 +166,7 @@
 			$("#product").append('<div class="col-xs-6 text-center"><div class="panel-body"><img  src="'+currentProduct.Imagem+'" width="300" height="300"></div></div>');
 			$("#product").append('<div class="col-xs-6 text-left"><div class="panel-body"><h2>'+currentProduct.Descrição+'</h2></div></div>');
 			$("#product").append('<div class="col-xs-6 text-left"><div class="panel-body"><h2>Preço: '+currentProduct.Preço+'€</h2></div></div>');
-			$("#product").append('<div class="col-xs-12 text-right AnchorToBottom panel-body"><div class="col-xs-2 col-xs-offset-8"><input id="demo1" type="text" value="1" name="demo1"></input></div><div class="col-xs-2"><button type="button" id="adicionar" class="btn btn-lg btn-primary">Adicionar</button></div></div>');
+			$("#product").append('<div class="col-xs-12 text-right AnchorToBottom panel-body"><div class="col-xs-2 col-xs-offset-6"><button type="button" id="inicio" class="btn btn-lg btn-primary">Inicio</button></div><div class="col-xs-2"><input id="demo1" type="text" value="1" name="demo1"></input></div><div class="col-xs-2"><button type="button" id="adicionar" class="btn btn-lg btn-primary">Adicionar</button></div></div>');
 		}
 		
 		buildProduct();
@@ -196,6 +196,11 @@
 			});
 			$("#adicionar").click(function(){
 				var found = false;
+				if(Number($("#demo1").val())>5){
+					if(!confirm('Está a adicionar '+$("#demo1").val()+' unidades de '+ currentProduct.Nome+' ao pedido. Pretende continuar?')){
+						return;
+					}
+				}
 				$.each(Pedido, function(i, item) {
 					if(item.Nome==currentProduct.Nome){
 						found = true;
@@ -203,10 +208,13 @@
 					}
 				});
 				if(!found){
-					Pedido = Pedido.concat({ID:Pedido.lenght+1,Quantidade:Number($("#demo1").val()),Nome:currentProduct.Nome,Preço:currentProduct.Preço});
+					Pedido = Pedido.concat({ID:Pedido.length+1,Quantidade:Number($("#demo1").val()),Nome:currentProduct.Nome,Preço:currentProduct.Preço});
 				}
 				localStorage.setItem('pedido',JSON.stringify(Pedido));
 				buildPedido();
+			});
+			$("#inicio").click(function(){
+				window.location.replace("index.html");
 			});
 		});
 		
