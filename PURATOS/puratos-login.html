@@ -90,13 +90,14 @@
 	    
 	<script>
 	document.getElementById("logonIdentifier").addEventListener("focusin", myFunction);
-	document.getElementById("logonIdentifier").addEventListener("focusin", myFunction);
+	document.getElementById("logonIdentifier").addEventListener("focusout", myFunction);
+	document.getElementById("password").addEventListener("focusin", myFunction);
 	document.getElementById("password").addEventListener("focusout", myFunction);
-	document.getElementById("password").addEventListener("focusout", myFunction);
+	
 	function myFunction() {
 		var x = document.getElementById("logo");
 		if (x.style.display === "none") {
-			x.style.display = "block";
+			x.style.display = "initial";
 		}else {
 			x.style.display = "none";
 		}
