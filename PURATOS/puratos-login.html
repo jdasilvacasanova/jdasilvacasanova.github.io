@@ -45,7 +45,8 @@
 		display:none;
 	  }
 	  .error{
-		background-color: rgb(255,0,0);
+		background-color: rgb(240,10,10);
+		border-radius:5px;
 	  }
 	  
 	  body {
@@ -71,7 +72,8 @@
 		margin-bottom: 60px;
 		background-position: center;
 		background-repeat: no-repeat;
-		background-size: 90% 90%;
+		background-size: contain;
+		padding: 10px;
 		background-image: url("https://jdasilvacasanova.github.io/PURATOS/PuratosLogoWhite.png") ;
 	
 	}
@@ -82,7 +84,17 @@
    </HEAD>
    <BODY>
 	   <div id="logo"> </div>
-	  <div id="api"> </div>
+	  <div id="api" onfocus="myFunction()" onfocusout="myFunction()"> </div>
 	    
+	<script>
+function myFunction() {
+  var x = document.getElementById("logo");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+</script>
    </BODY>
 </HTML>
